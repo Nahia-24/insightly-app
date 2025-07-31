@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -11,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { Mail, Lock, Eye } from 'lucide-react'; // Added Eye icon
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -62,49 +62,61 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="w-full max-w-sm bg-black/20 border-white/10 text-white backdrop-blur-sm">
-      <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-headline">Iniciar Sesión</CardTitle>
-        <CardDescription className="text-white/70">
+    <Card className="w-full max-w-sm bg-transparent border-none text-white shadow-none">
+      <CardHeader className="text-center mb-6">
+        <CardTitle className="text-3xl font-bold font-headline">Iniciar Sesión</CardTitle>
+        <CardDescription className="text-gray-300">
           Ingresa tu correo electrónico para iniciar sesión
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSignIn} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="nombre@ejemplo.com"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-white/5 border-white/20 focus:ring-purple-500"
-            />
+            <Label htmlFor="email" className="text-gray-300">Correo Electrónico</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="ejemplo@ejemplo.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10 pr-3 py-2 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-purple-600 focus:border-purple-600 text-gray-800"
+              />
+            </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Contraseña</Label>
-            <Input 
+            <Label htmlFor="password" className="text-gray-300">Contraseña</Label>
+             <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5" />
+              <Input 
                 id="password" 
                 type="password" 
                 required 
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-white/5 border-white/20 focus:ring-purple-500"
-            />
+                className="pl-10 pr-10 py-2 bg-gray-200 border border-gray-300 rounded-md focus:outline-none focus:ring-purple-600 focus:border-purple-600 text-gray-800"
+              />
+               <Eye className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 w-5 h-5 cursor-pointer" /> {/* Added eye icon */}
+            </div>
           </div>
-          <Button type="submit" className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:opacity-90 transition-opacity" disabled={isLoading}>
+          <div className="text-right text-sm mt-2">
+            <Link href="#" className="text-gray-300 hover:underline">
+              Forgot password?
+            </Link>
+          </div>
+          <Button type="submit" className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 transition-opacity text-white font-bold py-2 px-4 rounded-md" disabled={isLoading}>
             {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
           </Button>
-          <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 hover:text-white" onClick={handleGoogleSignIn} type="button">
+          <Button variant="outline" className="w-full bg-gray-200 border-gray-300 hover:bg-gray-300 text-gray-800 rounded-md" onClick={handleGoogleSignIn} type="button">
             <GoogleIcon className="mr-2 h-4 w-4" />
             Iniciar sesión con Google
           </Button>
         </form>
-        <div className="mt-4 text-center text-sm text-white/70">
+        <div className="mt-6 text-center text-sm text-gray-300">
           ¿No tienes una cuenta?{' '}
-          <Link href="/signup" className="underline hover:text-white">
+          <Link href="/signup" className="text-purple-600 hover:underline font-bold">
             Regístrate
           </Link>
         </div>

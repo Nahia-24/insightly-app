@@ -9,7 +9,7 @@ const LandingHeader = () => (
   <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-transparent">
     <div className="container flex h-20 max-w-screen-2xl items-center justify-between">
       <Link href="/" className="flex items-center gap-2">
-        <Image src="/logo.png" alt="Insightly Logo" width={40} height={40} data-ai-hint="logo" />
+        <Image src="/logo.png" alt="Insightly Logo" width={40} height={40} data-ai-hint="logo"/>
         <span className="font-headline text-3xl font-bold text-white">Insightly</span>
       </Link>
       <div className="flex items-center gap-2">
@@ -100,7 +100,7 @@ export default function LandingPage() {
                     Released under the MIT License.
                 </p>
                 <p className="text-balance text-sm leading-loose text-purple-200/70">
-                    Copyright © 2025-present Nazmul Hossain
+                    Copyright © 2025-present Nahia Sanchez
                 </p>
             </div>
         </footer>

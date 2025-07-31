@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -7,16 +6,11 @@ import { useRouter } from 'next/navigation';
 import { createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
+import { Mail, Lock, Eye, EyeOff } from 'lucide-react'; // Added EyeOff icon
 
 const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...props}>
@@ -28,10 +22,12 @@ const GoogleIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
 );
 
+
 export default function SignupPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // State for password visibility
   const router = useRouter();
   const { toast } = useToast();
 
@@ -42,7 +38,7 @@ export default function SignupPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push('/dashboard');
     } catch (error: any) {
-       toast({
+      toast({
         title: 'Error de registro',
         description: error.message,
         variant: 'destructive',
@@ -52,7 +48,7 @@ export default function SignupPage() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignUp = async () => {
     const provider = new GoogleAuthProvider();
     try {
       await signInWithPopup(auth, provider);
@@ -67,9 +63,9 @@ export default function SignupPage() {
   };
 
   return (
-    <Card className="w-full max-w-sm bg-black/20 border-white/10 text-white backdrop-blur-sm">
-      <CardHeader className="text-center">
-        <CardTitle className="text-3xl font-headline">Regístrate</CardTitle>
+    <Card className="w-full max-w-sm bg-transparent border-none text-white shadow-none">
+      <CardHeader className="text-center mb-6">
+        <CardTitle className="text-3xl font-bold font-headline">Regístrate</CardTitle>
         <CardDescription className="text-white/70">
           Ingresa tu información para crear una cuenta
         </CardDescription>
@@ -77,40 +73,50 @@ export default function SignupPage() {
       <CardContent>
         <form onSubmit={handleSignUp} className="grid gap-4">
           <div className="grid gap-2">
-            <Label htmlFor="email">Correo Electrónico</Label>
-            <Input
-              id="email"
-              type="email"
-              placeholder="nombre@ejemplo.com"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="bg-white/5 border-white/20 focus:ring-purple-500"
-            />
+            <Label htmlFor="email" className="text-white/90">Correo Electrónico</Label>
+            <div className="relative">
+              <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 w-5 h-5" />
+              <Input
+                id="email"
+                type="email"
+                placeholder="nombre@ejemplo.com"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="pl-10 pr-3 py-2 bg-white/10 border border-white/20 rounded-md focus:outline-none focus:ring-purple-600 focus:border-purple-600 text-white"
+              />
+            </div>
           </div>
           <div className="grid gap-2">
-            <Label htmlFor="password">Contraseña</Label>
-            <Input 
-                id="password" 
-                type="password" 
-                required 
+            <Label htmlFor="password" className="text-white/90">Contraseña</Label>
+            <div className="relative">
+              <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 w-5 h-5" />
+              <Input
+                id="password"
+                type={showPassword ? 'text' : 'password'} // Toggle password visibility
+                placeholder="Contraseña"
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-white/5 border-white/20 focus:ring-purple-500"
-            />
+                className="pl-10 pr-10 py-2 bg-white/10 border border-white/20 rounded-md focus:outline-none focus:ring-purple-600 focus:border-purple-600 text-white"
+              />
+              <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 w-5 h-5 focus:outline-none">
+                {showPassword ? <EyeOff /> : <Eye />} {/* Toggle eye icon */}
+              </button>
+            </div>
           </div>
-          <Button type="submit" className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:opacity-90 transition-opacity" disabled={isLoading}>
-            {isLoading ? 'Creando cuenta...' : 'Crear una cuenta'}
+          <Button type="submit" className="w-full bg-gradient-to-r from-pink-500 to-purple-600 hover:opacity-90 transition-opacity text-white font-bold py-2 px-4 rounded-md" disabled={isLoading}>
+            {isLoading ? 'Registrando...' : 'Regístrate'}
           </Button>
-          <Button variant="outline" className="w-full bg-transparent border-white/20 hover:bg-white/10 hover:text-white" onClick={handleGoogleSignIn} type="button">
+          <Button variant="outline" className="w-full bg-white/10 border-white/20 hover:bg-white/20 text-white rounded-md" onClick={handleGoogleSignUp} type="button">
             <GoogleIcon className="mr-2 h-4 w-4" />
-            Regístrate con Google
+            Registrarse con Google
           </Button>
         </form>
-        <div className="mt-4 text-center text-sm text-white/70">
+        <div className="mt-6 text-center text-sm text-white/70">
           ¿Ya tienes una cuenta?{' '}
-          <Link href="/login" className="underline hover:text-white">
-            Inicia sesión
+          <Link href="/login" className="text-white hover:underline font-bold">
+            Iniciar Sesión
           </Link>
         </div>
       </CardContent>
