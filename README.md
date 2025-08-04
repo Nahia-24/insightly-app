@@ -83,9 +83,9 @@ src/
 
 - [x] Setup base con Next.js y Firebase  
 - [x] Sistema de logueo y protección de rutas  
-- [ ] Dashboard inicial con datos simulados  
+- [x] Dashboard inicial con datos simulados  
 - [ ] Integración real con Meta API (Instagram/Facebook)  
-- [ ] Conexión con TikTok y YouTube  
+- [ ] Conexión con YouTube  
 - [ ] Módulo IA para preguntas inteligentes  
 - [ ] Soporte para múltiples redes sociales por usuario  
 - [ ] Despliegue en Vercel o Firebase Hosting  
