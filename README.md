@@ -1,4 +1,4 @@
-# 📊 Insightly – Social Media Analytics Dashboard with AI
+# Insightly – Social Media Analytics Dashboard with AI
 
 **Insightly** es una plataforma moderna que centraliza y visualiza tus métricas sociales desde Instagram, TikTok, Facebook y YouTube en un único panel inteligente. Con el poder de la inteligencia artificial.
 
